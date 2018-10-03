@@ -1,19 +1,90 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>SafeSpace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Icon -->
+    <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png">
+
+    <!-- Normalize & Style CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
 </head>
 <body>
     
-<p>Blah!</p>
-<p>Blah2!</p>
-<h1>blah</h1>
+    <div class="uk-cover-container">
+        <img src="assets/images/dallas2.jpg" alt="Photo by sergio souza on Unsplash" uk-cover>
+    </div>
+    
+    <div id="mainContainer" class="uk-container uk-flex uk-flex-row uk-flex-wrap uk-flex-height uk-flex-between uk-flex-middle">
+        
+        <div id="formContainer" class="uk-card uk-card-default uk-card-body uk-margin-auto uk-margin-auto-vertical">
+            <h3>Input Forms</h3>
+            <form id="formTrain">
+                <fieldset id="formField" class="uk-fieldset ">
+                    
+                    
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Street Name</legend>
+                        <input id="trainName-input" class="uk-input" type="text">
+                    </div>
+                    
+                    
+                    <div class="uk-margin">
+                        <legend class="uk-legend">City</legend>
+                        <input  id="trainDestination-input" class="uk-input" type="text">
+                    </div>
+                    
+                    
+                    <div class="uk-margin">
+                        <legend class="uk-legend">State</legend>
+                        <input id="trainTime-input" class="uk-input" type="text">
+                    </div>
+                    
+                    
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Zipcode</legend>
+                        <input id="trainFreq-input" class="uk-input" type="number">
+                    </div>
+                    
+                    <div class="uk-margin">
+                        <button id="trainSubmit" class="uk-button uk-button-default" value="Submit">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        
+        <div id="mapContainer" class="uk-card uk-card-default uk-card-body uk-margin-auto uk-margin-auto-vertical">
+            <h3>Map</h3>    
+            <div id="map"></div>
+        </div>
+        
+    </div>
+    
+    
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit-icons.min.js"></script>
+    
+    <!-- Google Maps API -->
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ8-DhZBU5vbCOyJfutvIHLOxG0j0qtKA&callback=initMap">
+    </script>   
 
-    <script src="assets/javascript/main.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+<!-- Main JS -->
+<script src="assets/javascript/main.js"></script>
+<script src="assets/javascript/gmaps.js"></script>
+<script src="assets/javascript/maps.js"></script>
+
 </body>
 </html>
