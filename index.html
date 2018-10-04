@@ -23,7 +23,7 @@
        <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
         <div id="formContainer" class="test uk-card uk-card-default">
-            <h3 id="inputFormHeading">Input Forms</h3>
+            <h3 id="inputFormHeading">Search</h3>
             <form id="formTrain" class="test">
                 <fieldset id="formField" class="uk-fieldset ">
                     
@@ -59,11 +59,24 @@
         </div>
 
         <div id="tableContainer" class="test1 uk-card uk-card-default">
-            <h3 id="inputFormHeading">Input Forms</h3>
+            <h3 id="inputFormHeading">Crime Report</h3>
 
-            <button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button>
+            <!-- <button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button>
             <button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button>
-            <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button>
+            <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button> -->
+
+            <ul uk-tab id="crimeTabs">
+                    <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a></li>
+                    <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button></a></li>
+                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a></li>
+                </ul>
+                
+                <ul class="uk-switcher uk-margin" id="crimeTabTables">
+                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                    <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+                    <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, sed do eiusmod.</li>
+                </ul>
+
         </div>
         
         <div id="map" class="uk-flex-wrap-stretch"></div>
@@ -104,7 +117,7 @@
     <script src="assets/javascript/input.js"></script>
     <!-- <script src="assets/javascript/gmaps.js"></script> -->
     <!-- <script src="assets/javascript/maps.js"></script> -->
-    <script src="prototype.js"></script>
+    <!-- <script src="prototype.js"></script> -->
 
 
 </body>

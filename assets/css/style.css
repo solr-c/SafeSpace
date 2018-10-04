@@ -14,3 +14,12 @@
     top: 0;
     left: 0;
 }
+
+#tableContainer button {
+    margin: 0 auto;
+}
+
+#crimeTabs li {
+    margin: 0;
+    padding: 0;
+}
