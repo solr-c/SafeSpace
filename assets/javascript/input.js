@@ -34,6 +34,11 @@ $('#closeButton').on('click', function(e) {
     e.preventDefault();
     $('#tableContainer').hide(1000);
 
+    $('#streetName-input').val("");
+    $('#city-input').val("");
+    $('#state-input').val("");
+    $('#zipCode-input').val("");
+
 
     delayTest1 = setTimeout(function() {
         $('#formContainer').show(1000)

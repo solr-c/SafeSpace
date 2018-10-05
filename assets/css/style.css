@@ -18,3 +18,14 @@
 #shootingButton, #callsButtons, #crimeButton {
     text-align: center;
 }
+
+#crimeTab {
+    width: 325px;
+    height: 650px;
+    overflow: auto;
+}
+
+#tableItem tr {
+    padding: 10px;
+    margin: 10px;
+}
