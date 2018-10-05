@@ -15,11 +15,5 @@
     left: 0;
 }
 
-#tableContainer button {
-    margin: 0 auto;
-}
-
-#crimeTabs li {
-    margin: 0;
-    padding: 0;
-}
+#shootingButton, #callsButtons, #crimeButton {
+    text-align: center;
