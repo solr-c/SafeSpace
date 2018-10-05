@@ -17,3 +17,9 @@
 
 #shootingButton, #callsButtons, #crimeButton {
     text-align: center;
+}
+
+#crimeTab {
+    height: 650px;
+    overflow: auto;
+}

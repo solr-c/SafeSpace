@@ -181,7 +181,8 @@ $("#formSubmit").on("click", function (event) {
 })
 
 
-$("#shootingButton").on("click", function () {
+$("#shootingButton").on("click", function (e) {
+    e.preventDefault();
     var street = $("#streetName-input").val().trim();
     var city = $("#city-input").val().trim();
     var state = $("#state-input").val().trim();
@@ -194,6 +195,14 @@ $("#shootingButton").on("click", function () {
     centerMap(coords.lat, coords.lng);
     addLocationMark(coords.lat, coords.lng);
 
+    var container = $("#shootingTab");
+    var createP = $("<p>");
+    createP.addClass("shooting");
+    createP.html("Shooting: " + street, city, state, zipCode);
+
+    container.append(createP);
+
+
     for (i = 0; i < recs.length; i++) {
 
         var html = "<p>Date: " + recs[i].incident.date +
@@ -205,7 +214,8 @@ $("#shootingButton").on("click", function () {
     }
 });
 
-$("#callsButton").on("click", function () {
+$("#callsButton").on("click", function (e) {
+    e.preventDefault();
     var street = $("#streetName-input").val().trim();
     var city = $("#city-input").val().trim();
     var state = $("#state-input").val().trim();
@@ -219,11 +229,20 @@ $("#callsButton").on("click", function () {
     centerMap(coords.lat, coords.lng);
     addLocationMark(coords.lat, coords.lng);
 
+    var container = $("#callsTab");
+    var createP = $("<p>");
+    createP.addClass("calls");
+    createP.html("Current: " + street, city, state, zipCode);
+
+    container.append(createP);
+
     for (i = 0; i < recs.length; i++) {
         var html = "<p>Date: " + recs[i].incident.date_time +
             "</p><p>Priority: " + recs[i].incident.priority +
             "</p><p>Unit: " + recs[i].incident.unit_number +
             "</p><p>Status: " + recs[i].incident.status + "</p>";
+
+            
 
         addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.nature_of_call, html);
     }
@@ -258,8 +277,8 @@ function getCoordinates(address) {
 
 $("#crimeButton").on("click", function (event) {
     event.preventDefault();
-    $("#shootingButton").hide();
-    $("#callsButton").hide();
+    // $("#shootingButton").hide();
+    // $("#callsButton").hide();
     crimeHistory();
 })
 
@@ -287,7 +306,7 @@ function crimeHistory() {
         var date = crimeIncident[i].reporteddate;
 
 
-        var container = $("#tableContainer");
+        var container = $("#crimeTab");
         var createP = $("<p>");
         createP.addClass("address");
         createP.html(offense + "<br />" + address + "<br />" + date + "<br />" + name + "<br />" + caseMo);
