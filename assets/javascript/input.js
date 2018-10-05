@@ -13,9 +13,7 @@ function init() {
 
 $('#formSubmit').on('click', function(e) {
     e.preventDefault();
-    $('.test').hide(1000);
-    $('#inputFormHeading').hide(1000);
-    // $('.test1').show(1000);
+    $('#formContainer').hide(1000);
 
     var streetName = $('#streetName-input').val().trim();
     var city = $('#city-input').val().trim();
@@ -28,12 +26,20 @@ $('#formSubmit').on('click', function(e) {
 
 
     delayTest1 = setTimeout(function() {
-        $('.test1').show(1000);
-        $('.test').addClass('test1').removeClass('test')
+        $('#tableContainer').show(1000)
     }, 1500);
 });
 
+$('#closeButton').on('click', function(e) {
+    e.preventDefault();
+    $('#tableContainer').hide(1000);
 
+
+    delayTest1 = setTimeout(function() {
+        $('#formContainer').show(1000)
+    }, 1500);
+
+});
 
 
 
