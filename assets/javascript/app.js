@@ -6,7 +6,7 @@ var shootingResponse = null; //this is a global var for shooting response
 function getShootingRecords(srcLat, srcLng) {
     console.log("shooting lat/long = " + srcLat + "/" + srcLng);
     records = []; //empty  array for records
-    var queryURL = "https://www.dallasopendata.com/resource/s3jz-d6pf.json?$limit=50&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
+    var queryURL = "https://www.dallasopendata.com/resource/s3jz-d6pf.json?$limit=5000&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
 
     // make the ajax query sync so that we can hang the response on the global to process in a function.
     $.ajax({
@@ -56,7 +56,7 @@ var currentCalls = null;
 function getCurrentCalls(srcLat, srcLng) {
     console.log("current lat/long = " + srcLat + "/" + srcLng);
     records = [];
-    var queryURL = "https://www.dallasopendata.com/resource/are8-xahz.json?$limit=50&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
+    var queryURL = "https://www.dallasopendata.com/resource/are8-xahz.json?$limit=100&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
 
     $.ajax({
         url: queryURL,
@@ -148,7 +148,7 @@ function addMark(lat, lng, title, txt) {
             coords: [lat, lng], // GPS coords
             title: title, // Title
             text: txt,// HTML content
-            icon: "assets/images/icons8-shooting-40.png"
+            icon: "assets/images/icons8-shooting-30.png"
         });
     })
 }
@@ -162,17 +162,10 @@ function centerMap(lat, lng) {
         });
     });
 }
-$("#formSubmit").on("click", function (event) {
-    event.preventDefault();
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Shooting: " + street, city, state, zipCode);
-    var coords = getCoordinates(street, city, state, zipCode);
-    // console.log(search)
-    // console.log("Shooting: " + street, city, state, zipCode));
-    // var coords = getCoordinates(street, city, state, zipCode);
+$("#search").on("click", function () {
+    var search = $("#map-input").val().trim();
+    console.log("Shooting: " + search);
+    var coords = getCoordinates(search);
 
     centerMap(coords.lat, coords.lng);
     addLocationMark(coords.lat, coords.lng);
@@ -181,13 +174,10 @@ $("#formSubmit").on("click", function (event) {
 })
 
 
-$("#shootingButton").on("click", function () {
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Shooting: " + street, city, state, zipCode);
-    var coords = getCoordinates(street, city, state, zipCode);
+$("#shootings").on("click", function () {
+    var search = $("#map-input").val().trim();
+    console.log("Shooting: " + search);
+    var coords = getCoordinates(search);
 
     var recs = getShootingRecords(coords.lat, coords.lng);
 
@@ -205,14 +195,10 @@ $("#shootingButton").on("click", function () {
     }
 });
 
-$("#callsButton").on("click", function () {
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("what");
-    console.log("Current: " + street, city, state, zipCode);
-    var coords = getCoordinates(street, city, state, zipCode);
+$("#current").on("click", function () {
+    var search = $("#map-input").val().trim();
+    console.log("Current: " + search);
+    var coords = getCoordinates(search);
 
     var recs = getCurrentCalls(coords.lat, coords.lng);
 
@@ -239,7 +225,7 @@ function getCoordinates(address) {
     var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&address=" + address;
     var lat = 0;
     var lng = 0;
-    console.log(lastResp);
+
     $.ajax
         ({
             type: "GET",
@@ -256,17 +242,17 @@ function getCoordinates(address) {
     return { lat: lat, lng: lng };
 }
 
-$("#crimeButton").on("click", function (event) {
+$("#crime").on("click", function (event) {
     event.preventDefault();
-    $("#shootingButton").hide();
-    $("#callsButton").hide();
+    $("#shootings").hide();
+    $("#current").hide();
     crimeHistory();
 })
 
 var crimeIncident = null;
 function crimeHistory() {
     var history = [];
-    var queryUrl = "https://www.dallasopendata.com/resource/9s22-2qus.json?$limit=100&$$app_token=kDCDojjY922O36hyR8W6vQ2nl&$order=edate%20DESC";
+    var queryUrl = "https://www.dallasopendata.com/resource/9s22-2qus.json?$limit=500&$$app_token=kDCDojjY922O36hyR8W6vQ2nl&$order=edate%20DESC";
 
     $.ajax({
         url: queryUrl,
@@ -287,7 +273,7 @@ function crimeHistory() {
         var date = crimeIncident[i].reporteddate;
 
 
-        var container = $("#tableContainer");
+        var container = $(".container");
         var createP = $("<p>");
         createP.addClass("address");
         createP.html(offense + "<br />" + address + "<br />" + date + "<br />" + name + "<br />" + caseMo);
