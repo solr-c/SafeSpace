@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Icon -->
-    <!-- <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png"> -->
+    <link rel="icon" type="image/PNG" href="assets/images/icons8-police-badge-48.png">
 
     <!-- Normalize & Style CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
@@ -70,18 +70,19 @@
 
             <ul uk-tab id="crimeTabs">
 
-                <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police
-                            Shootings</button></a></li>
-                <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current
-                            Calls</button></a></li>
-                <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Crime History
-                           </button></a></li>
-            </ul>
 
-            <ul class="uk-switcher uk-margin" id="crimeTabTables">
-
-            </ul>
-
+                    <li><a href="#"></a><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a></li>
+                    <li><a href="#"></a><button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button></a></li>
+                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a></li>
+                </ul>
+                
+                <ul class="uk-switcher uk-margin" id="crimeTabTables">
+                    <li id="shootingTab"></li>
+                    <li id="callsTab"></li>
+                    <li id="crimeTab">
+                        <div class="uk-table uk-table-striped" id="tableItem"></div>
+                    </li>
+                </ul>
         </div>
 
         <div id="map" class="uk-flex-wrap-stretch"></div>
@@ -120,9 +121,10 @@
     <!-- <script src="assets/javascript/gmaps.js"></script> -->
     <script src="../Popo/assets/javascript/maps.js"></script>
     <!-- <script src="prototype.js"></script> -->
-    <!-- 
-   <script src="assets/javascript/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
+
+    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
+    <!-- <script src="assets/javascript/app.js"></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
         defer></script> -->
 
 

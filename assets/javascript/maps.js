@@ -209,6 +209,14 @@ $("#shootingButton").on("click", function (e) {
     container.append(createP);
 
 
+    var container = $("#shootingTab");
+    var createP = $("<p>");
+    createP.addClass("shooting");
+    createP.html("Shooting: " + street, city, state, zipCode);
+
+    container.append(createP);
+
+
     for (i = 0; i < recs.length; i++) {
 
         var html = "<p>Date: " + recs[i].incident.date +
@@ -254,6 +262,7 @@ $("#callsButton").on("click", function (e) {
     createP.addClass("calls");
     createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
 
+
     container.append(createP);
 
     for (i = 0; i < recs.length; i++) {
@@ -263,8 +272,6 @@ $("#callsButton").on("click", function (e) {
             "</p><p>Status: " + recs[i].incident.status + "</p>";
 
 
-
-     
             var caseMo = recs[i].incident.date_time ;
             var name = recs[i].incident.priority;
             var offense = recs[i].incident.unit_number;
@@ -281,6 +288,7 @@ $("#callsButton").on("click", function (e) {
 
 
         addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.nature_of_call, html, "");
+
     }
 });
 
@@ -352,6 +360,7 @@ $("#crimeButton").on("click", function (e) {
     console.log("Crime: " + street + " " + city + ", " + state + " " + zipCode);
     var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
 
+
     var recs = crimeHistory(coords.lat, coords.lng);
 
     centerMap(coords.lat, coords.lng);
@@ -381,8 +390,9 @@ $("#crimeButton").on("click", function (e) {
         var date = crimeIncident[i].reporteddate;
 
 
-        var container = $("#crimeTabs");
-        var createP = $("<p>");
+
+        var container = $("#tableItem");
+        var createP = $("<tr>");
         createP.addClass("address");
         createP.html(offense + "<br />" + address + "<br />" + date + "<br />" + name + "<br />" + caseMo);
 
