@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
+
+<head>
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SafeSpace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Icon -->
-    <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png">
+    <!-- <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png"> -->
 
     <!-- Normalize & Style CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <!-- <link rel="stylesheet" href="prototype.css"> -->
-    
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
 </head>
+
 <body>
 
-    
+
     <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
         <div id="formContainer" class="test uk-card uk-card-default">
             <h3 id="inputFormHeading">Search</h3>
             <form id="formTrain" class="">
                 <fieldset id="formField" class="uk-fieldset ">
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">Street Name</legend>
                         <input id="streetName-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">City</legend>
-                        <input  id="city-input" class="uk-input" type="text">
+                        <input id="city-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">State</legend>
                         <input id="state-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">Zipcode</legend>
                         <input id="zipCode-input" class="uk-input" type="number">
                     </div>
-                    
+
                     <div class="uk-margin">
                         <button id="formSubmit" class="uk-button uk-button-default" value="Submit">Submit</button>
                     </div>
@@ -68,63 +70,62 @@
 
             <ul uk-tab id="crimeTabs">
 
-                    <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a></li>
-                    <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button></a></li>
-                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a></li>
-                </ul>
-                
-                <ul class="uk-switcher uk-margin" id="crimeTabTables">
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-                    <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                    <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, sed do eiusmod.</li>
-                </ul>
+                <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police
+                            Shootings</button></a></li>
+                <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current
+                            Calls</button></a></li>
+                <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Crime History
+                           </button></a></li>
+            </ul>
+
+            <ul class="uk-switcher uk-margin" id="crimeTabTables">
+
+            </ul>
 
         </div>
-        
+
         <div id="map" class="uk-flex-wrap-stretch"></div>
-    </div> 
+    </div>
 
 
     <!-- Google Maps Script -->
     <script>
-    function initMap() {
-        var location = {
-            lat: 32.776,
-            lng: -96.796
-        };
-
-        var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 13, 
-            center: location
-        });
-    };
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 32.7766642, lng: -96.79698789999999 },
+                zoom: 10
+            });
+        }
     </script>
-    
+
 
 
     <!-- UIkit JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit-icons.min.js"></script>
-    
+
     <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
-        defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap"
+        async defer></script>
 
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
 
     <!-- Main JS -->
     <script src="assets/javascript/input.js"></script>
     <!-- <script src="assets/javascript/gmaps.js"></script> -->
-    <script src="assets/javascript/maps.js"></script>
+    <script src="../Popo/assets/javascript/maps.js"></script>
     <!-- <script src="prototype.js"></script> -->
-
-    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
-    <script src="assets/javascript/app.js"></script>
+    <!-- 
+   <script src="assets/javascript/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
-        defer></script>
+        defer></script> -->
 
 
 </body>
+
 </html>
