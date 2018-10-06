@@ -306,8 +306,8 @@ function crimeHistory() {
         var date = crimeIncident[i].reporteddate;
 
 
-        var container = $("#crimeTab");
-        var createP = $("<p>");
+        var container = $("#tableItem");
+        var createP = $("<tr>");
         createP.addClass("address");
         createP.html(offense + "<br />" + address + "<br />" + date + "<br />" + name + "<br />" + caseMo);
 
