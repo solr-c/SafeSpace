@@ -1,14 +1,14 @@
 
-//   var config = {
-//     apiKey: "AIzaSyBvoP1Ymio1QdAedieiC_LRXV4hTuapJZQ",
-//     authDomain: "yanproject-1.firebaseapp.com",
-//     databaseURL: "https://yanproject-1.firebaseio.com",
-//     projectId: "yanproject-1",
-//     storageBucket: "yanproject-1.appspot.com",
-//     messagingSenderId: "4976412073"
-//   };
-//   firebase.initializeApp(config);
-//   var database = firebase.database();
+var config = {
+    apiKey: "AIzaSyBmy65eFPJ8elKkPkySIuBAk-z62R11NVA",
+    authDomain: "project-myc.firebaseapp.com",
+    databaseURL: "https://project-myc.firebaseio.com",
+    projectId: "project-myc",
+    storageBucket: "",
+    messagingSenderId: "322670292591"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
 var limit = 1000;
 var searchCoords = null; //global for the coordinates of the searched address
@@ -183,7 +183,29 @@ $("#formSubmit").on("click", function (event) {
     centerMap(searchCoords.lat, searchCoords.lng);
     addLocationMark(searchCoords.lat, searchCoords.lng);
 
+    var location = {
+        streetName: street,
+        cityName: city,
+        stateName: state,
+        zip: zipCode
+    };
 
+    database.ref().push(location);
+    $("#streetName-input").val("");
+    $("#city-input").val("");
+    $("#state-input").val("");
+    $("#zipCode-input").val("");
+
+});
+
+database.ref().on("child_added", function(childSnapshot){
+    console.log("child" + childSnapshot.val());
+
+    var a = childSnapshot.val().streetName;
+    var b = childSnapshot.val().cityName;
+    var c = childSnapshot.val().stateName;
+    var d = childSnapshot.val().zip;
+    console.log(a + b + c + d) + "work ork";
 })
 
 
@@ -217,18 +239,18 @@ $("#shootingButton").on("click", function (e) {
             "</p><p>Result: " + recs[i].incident.suspect_deceased_injured_or_shoot_and_miss + "</p>";
 
 
-            var caseMo = recs[i].incident.date_time ;
-            var name = recs[i].incident.suspect_s;
-            var offense = recs[i].incident.suspect_weapon ;
-            var date = recs[i].incident.suspect_deceased_injured_or_shoot_and_miss 
-    
-    
-            var container = $("#crimeTabs");
-            var createP = $("<p>");
-            createP.addClass("address");
-            createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
-    
-            container.append(createP);
+        var caseMo = recs[i].incident.date_time;
+        var name = recs[i].incident.suspect_s;
+        var offense = recs[i].incident.suspect_weapon;
+        var date = recs[i].incident.suspect_deceased_injured_or_shoot_and_miss
+
+
+        var container = $("#crimeTabs");
+        var createP = $("<p>");
+        createP.addClass("address");
+        createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
+
+        container.append(createP);
 
 
         addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.case, html, "assets/images/icons8-shooting-40.png");
@@ -264,19 +286,19 @@ $("#callsButton").on("click", function (e) {
 
 
 
-     
-            var caseMo = recs[i].incident.date_time ;
-            var name = recs[i].incident.priority;
-            var offense = recs[i].incident.unit_number;
-            var date = recs[i].incident.status
-    
-    
-            var container = $("#crimeTabs");
-            var createP = $("<p>");
-            createP.addClass("address");
-            createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
-    
-            container.append(createP);
+
+        var caseMo = recs[i].incident.date_time;
+        var name = recs[i].incident.priority;
+        var offense = recs[i].incident.unit_number;
+        var date = recs[i].incident.status
+
+
+        var container = $("#crimeTabs");
+        var createP = $("<p>");
+        createP.addClass("address");
+        createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
+
+        container.append(createP);
 
 
 
