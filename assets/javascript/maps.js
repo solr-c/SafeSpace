@@ -1,16 +1,16 @@
 
-//   var config = {
-//     apiKey: "AIzaSyBvoP1Ymio1QdAedieiC_LRXV4hTuapJZQ",
-//     authDomain: "yanproject-1.firebaseapp.com",
-//     databaseURL: "https://yanproject-1.firebaseio.com",
-//     projectId: "yanproject-1",
-//     storageBucket: "yanproject-1.appspot.com",
-//     messagingSenderId: "4976412073"
-//   };
-//   firebase.initializeApp(config);
-//   var database = firebase.database();
+var config = {
+    apiKey: "AIzaSyBmy65eFPJ8elKkPkySIuBAk-z62R11NVA",
+    authDomain: "project-myc.firebaseapp.com",
+    databaseURL: "https://project-myc.firebaseio.com",
+    projectId: "project-myc",
+    storageBucket: "",
+    messagingSenderId: "322670292591"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
 
-var limit = 1000;
+var limit = 100;
 var searchCoords = null; //global for the coordinates of the searched address
 var shootingResponse = null; //this is a global var for shooting response
 
@@ -174,16 +174,41 @@ $("#formSubmit").on("click", function (event) {
     var city = $("#city-input").val().trim();
     var state = $("#state-input").val().trim();
     var zipCode = $("#zipCode-input").val().trim();
-    console.log("Shooting: " + street, city, state, zipCode);
+    console.log("text: " + street, city, state, zipCode);
     searchCoords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
     // console.log(search)
     // console.log("Shooting: " + street, city, state, zipCode));
     // var coords = getCoordinates(street, city, state, zipCode);
 
+    //TODO: check for coords of 0/0 if so, the address was invalid
+    // ALSO, the can only search Dallas area.
+
     centerMap(searchCoords.lat, searchCoords.lng);
     addLocationMark(searchCoords.lat, searchCoords.lng);
 
+    var location = {
+        streetName: street,
+        cityName: city,
+        stateName: state,
+        zip: zipCode
+    };
 
+    database.ref().push(location);
+    $("#streetName-input").val("");
+    $("#city-input").val("");
+    $("#state-input").val("");
+    $("#zipCode-input").val("");
+
+});
+
+database.ref().on("child_added", function(childSnapshot){
+    console.log("child" + childSnapshot.val());
+
+    var a = childSnapshot.val().streetName;
+    var b = childSnapshot.val().cityName;
+    var c = childSnapshot.val().stateName;
+    var d = childSnapshot.val().zip;
+    console.log(a + b + c + d) + "work ork";
 })
 
 
@@ -195,7 +220,7 @@ $("#shootingButton").on("click", function (e) {
     var zipCode = $("#zipCode-input").val().trim();
     console.log("Shooting: " + street + city + state + zipCode);
     //searchCoords  = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
-
+    console.log("s="+searchCoords.lat+"/"+ searchCoords.lng);
     var recs = getShootingRecords(searchCoords.lat, searchCoords.lng);
 
     centerMap(searchCoords.lat, searchCoords.lng);
@@ -204,15 +229,7 @@ $("#shootingButton").on("click", function (e) {
     var container = $("#shootingTab");
     var createP = $("<p>");
     createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
-
-    container.append(createP);
-
-
-    var container = $("#shootingTab");
-    var createP = $("<p>");
-    createP.addClass("shooting");
-    createP.html("Shooting: " + street, city, state, zipCode);
+    //createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
@@ -225,18 +242,18 @@ $("#shootingButton").on("click", function (e) {
             "</p><p>Result: " + recs[i].incident.suspect_deceased_injured_or_shoot_and_miss + "</p>";
 
 
-            var caseMo = recs[i].incident.date_time ;
-            var name = recs[i].incident.suspect_s;
-            var offense = recs[i].incident.suspect_weapon ;
-            var date = recs[i].incident.suspect_deceased_injured_or_shoot_and_miss 
-    
-    
-            var container = $("#crimeTabs");
-            var createP = $("<p>");
-            createP.addClass("address");
-            createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
-    
-            container.append(createP);
+        var caseMo = recs[i].incident.date_time;
+        var name = recs[i].incident.suspect_s;
+        var offense = recs[i].incident.suspect_weapon;
+        var date = recs[i].incident.suspect_deceased_injured_or_shoot_and_miss
+
+
+        var container = $("#crimeTabs");
+        var createP = $("<p>");
+        createP.addClass("address");
+        createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
+
+        container.append(createP);
 
 
         addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.case, html, "assets/images/icons8-shooting-40.png");
@@ -245,23 +262,23 @@ $("#shootingButton").on("click", function (e) {
 
 $("#callsButton").on("click", function (e) {
     e.preventDefault();
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Current: " + street + " " + city + ", " + state + " " + zipCode);
-    var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // var street = $("#streetName-input").val().trim();
+    // var city = $("#city-input").val().trim();
+    // var state = $("#state-input").val().trim();
+    // var zipCode = $("#zipCode-input").val().trim();
+    // console.log("Current: " + street + " " + city + ", " + state + " " + zipCode);
+    //var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // console.log("s="+coords.lat+"/"+ coords.lng);
+    
+    var recs = getCurrentCalls(searchCoords.lat, searchCoords.lng);
 
-    var recs = getCurrentCalls(coords.lat, coords.lng);
-
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    centerMap(searchCoords.lat, searchCoords.lng);
+    addLocationMark(searchCoords.lat, searchCoords.lng);
 
     var container = $("#callsTab");
     var createP = $("<p>");
     createP.addClass("calls");
-    createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
-
+   // createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
@@ -272,23 +289,24 @@ $("#callsButton").on("click", function (e) {
             "</p><p>Status: " + recs[i].incident.status + "</p>";
 
 
-            var caseMo = recs[i].incident.date_time ;
-            var name = recs[i].incident.priority;
-            var offense = recs[i].incident.unit_number;
-            var date = recs[i].incident.status
-    
-    
-            var container = $("#crimeTabs");
-            var createP = $("<p>");
-            createP.addClass("address");
-            createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
-    
-            container.append(createP);
+
+
+        var caseMo = recs[i].incident.date_time;
+        var name = recs[i].incident.priority;
+        var offense = recs[i].incident.unit_number;
+        var date = recs[i].incident.status
+
+
+        var container = $("#crimeTabs");
+        var createP = $("<p>");
+        createP.addClass("address");
+        createP.html(offense + "<br />" + date + "<br />" + name + "<br />" + caseMo);
+
+        container.append(createP);
 
 
 
         addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.nature_of_call, html, "");
-
     }
 });
 
@@ -353,23 +371,22 @@ function getCoordinates(address) {
 $("#crimeButton").on("click", function (e) {
     e.preventDefault();
     console.log("crime button");
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Crime: " + street + " " + city + ", " + state + " " + zipCode);
-    var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // var street = $("#streetName-input").val().trim();
+    // var city = $("#city-input").val().trim();
+    // var state = $("#state-input").val().trim();
+    // var zipCode = $("#zipCode-input").val().trim();
+    // console.log("Crime: " + street + " " + city + ", " + state + " " + zipCode);
+    // var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
 
+    var recs = crimeHistory(searchCoords.lat, searchCoords.lng);
 
-    var recs = crimeHistory(coords.lat, coords.lng);
-
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    centerMap(searchCoords.lat, searchCoords.lng);
+    addLocationMark(searchCoords.lat, searchCoords.lng);
 
     var container = $("#shootingTab");
     var createP = $("<p>");
     createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
+   // createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
@@ -390,9 +407,8 @@ $("#crimeButton").on("click", function (e) {
         var date = crimeIncident[i].reporteddate;
 
 
-
-        var container = $("#tableItem");
-        var createP = $("<tr>");
+        var container = $("#crimeTabs");
+        var createP = $("<p>");
         createP.addClass("address");
         createP.html(offense + "<br />" + address + "<br />" + date + "<br />" + name + "<br />" + caseMo);
 
