@@ -162,7 +162,8 @@ function centerMap(lat, lng) {
         });
     });
 }
-$("#search").on("click", function () {
+$("#search").on("click", function (e) {
+    e.preventDefault();
     var search = $("#map-input").val().trim();
     console.log("Shooting: " + search);
     var coords = getCoordinates(search);
@@ -174,7 +175,8 @@ $("#search").on("click", function () {
 })
 
 
-$("#shootings").on("click", function () {
+$("#shootings").on("click", function (e) {
+    e.preventDefault();
     var search = $("#map-input").val().trim();
     console.log("Shooting: " + search);
     var coords = getCoordinates(search);

@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
-var limit = 1000;
+var limit = 100;
 var searchCoords = null; //global for the coordinates of the searched address
 var shootingResponse = null; //this is a global var for shooting response
 
@@ -174,11 +174,14 @@ $("#formSubmit").on("click", function (event) {
     var city = $("#city-input").val().trim();
     var state = $("#state-input").val().trim();
     var zipCode = $("#zipCode-input").val().trim();
-    console.log("Shooting: " + street, city, state, zipCode);
+    console.log("text: " + street, city, state, zipCode);
     searchCoords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
     // console.log(search)
     // console.log("Shooting: " + street, city, state, zipCode));
     // var coords = getCoordinates(street, city, state, zipCode);
+
+    //TODO: check for coords of 0/0 if so, the address was invalid
+    // ALSO, the can only search Dallas area.
 
     centerMap(searchCoords.lat, searchCoords.lng);
     addLocationMark(searchCoords.lat, searchCoords.lng);
@@ -217,7 +220,7 @@ $("#shootingButton").on("click", function (e) {
     var zipCode = $("#zipCode-input").val().trim();
     console.log("Shooting: " + street + city + state + zipCode);
     //searchCoords  = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
-
+    console.log("s="+searchCoords.lat+"/"+ searchCoords.lng);
     var recs = getShootingRecords(searchCoords.lat, searchCoords.lng);
 
     centerMap(searchCoords.lat, searchCoords.lng);
@@ -226,7 +229,7 @@ $("#shootingButton").on("click", function (e) {
     var container = $("#shootingTab");
     var createP = $("<p>");
     createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
+    //createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
@@ -259,22 +262,23 @@ $("#shootingButton").on("click", function (e) {
 
 $("#callsButton").on("click", function (e) {
     e.preventDefault();
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Current: " + street + " " + city + ", " + state + " " + zipCode);
-    var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // var street = $("#streetName-input").val().trim();
+    // var city = $("#city-input").val().trim();
+    // var state = $("#state-input").val().trim();
+    // var zipCode = $("#zipCode-input").val().trim();
+    // console.log("Current: " + street + " " + city + ", " + state + " " + zipCode);
+    //var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // console.log("s="+coords.lat+"/"+ coords.lng);
+    
+    var recs = getCurrentCalls(searchCoords.lat, searchCoords.lng);
 
-    var recs = getCurrentCalls(coords.lat, coords.lng);
-
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    centerMap(searchCoords.lat, searchCoords.lng);
+    addLocationMark(searchCoords.lat, searchCoords.lng);
 
     var container = $("#callsTab");
     var createP = $("<p>");
     createP.addClass("calls");
-    createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
+   // createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
@@ -367,22 +371,22 @@ function getCoordinates(address) {
 $("#crimeButton").on("click", function (e) {
     e.preventDefault();
     console.log("crime button");
-    var street = $("#streetName-input").val().trim();
-    var city = $("#city-input").val().trim();
-    var state = $("#state-input").val().trim();
-    var zipCode = $("#zipCode-input").val().trim();
-    console.log("Crime: " + street + " " + city + ", " + state + " " + zipCode);
-    var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    // var street = $("#streetName-input").val().trim();
+    // var city = $("#city-input").val().trim();
+    // var state = $("#state-input").val().trim();
+    // var zipCode = $("#zipCode-input").val().trim();
+    // console.log("Crime: " + street + " " + city + ", " + state + " " + zipCode);
+    // var coords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
 
-    var recs = crimeHistory(coords.lat, coords.lng);
+    var recs = crimeHistory(searchCoords.lat, searchCoords.lng);
 
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    centerMap(searchCoords.lat, searchCoords.lng);
+    addLocationMark(searchCoords.lat, searchCoords.lng);
 
     var container = $("#shootingTab");
     var createP = $("<p>");
     createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
+   // createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
 
     container.append(createP);
 
