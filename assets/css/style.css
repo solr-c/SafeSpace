@@ -29,3 +29,45 @@
     padding: 10px;
     margin: 10px;
 }
+
+#wholeMap{
+    display: none;
+}
+
+.uk-card {
+    padding: 8px;
+    width: 297px;
+    color: white;
+}
+
+#front {
+    background-image: url("../images/thumb-1920-358088.jpg");
+    color: white;
+}
+
+.shoot {
+    color: white;
+}
+
+.actcalls {
+    color: white;
+}
+.histcall {
+    color: white;
+}
+
+.city {
+    text-align: center;
+    color: #FFFEE6;
+    font-family: 'Abril Fatface', cursive;
+    font-size: 100px;
+}
+
+#formRegister {
+    display: none;
+}
+
+#formLogin {
+display: none;
+}
+
