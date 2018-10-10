@@ -14,13 +14,96 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <!-- <link rel="stylesheet" href="prototype.css"> -->
-
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
 </head>
 
 <body>
+    <div id="front">
+        <h1 class="city">CITY OF DALLAS</h1>
+        <div id="butt">
+            <form>
+            <button id="registerbutton">Register</button>
+            <button id="loginbutton">Log In</button>
+            <button id="guessbutton">Guesst</button>
+        </form>
+        </div>
+        <div uk-grid uk-height-match="target: > div > .uk-card">
+            <div>
 
+                <div class="uk-card uk-card-body">
+                    <article class="uk-article">
+                        <h1 class="shoot">Shooting History</h1>
+                        <ul>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+
+                        </ul>
+                    </article>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-body">
+                    <article class="uk-article">
+                        <h1 class="actcalls">Active Calls</h1>
+                        <ul>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+
+                        </ul>
+                    </article>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-body">
+                    <article class="uk-article">
+                        <h1 class="histcall">Crime History</h1>
+                        <ul>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+                            <li>a</li>
+
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="uk-card uk-card-body">
+        <form id="formRegister">
+            <input type="text" id="street-input" placeholder="street">
+            <input type="text" id="city-input" placeholder="city">
+            <input type="text" id="state-input" placeholder="state">
+            <input type="text" id="zip-input" placeholder="zip code">
+            <input type="text" id="username-input" placeholder="username">
+            <input type="password" id="password-input" placeholder="password">
+            <input type="password" id="password-input2" placeholder="password again">
+            <input type="email" id="email-input" placeholder="email">
+            <input type="text" id="range-input" placeholder="range">
+            <br><br><br>
+            <button type="submit" id="register-input">Register</button>
+        </form>
+    </div>
+
+    <div class="uk-card uk-card-body">
+            <form id="formLogin">
+                <input type="text" id="userLog-input" placeholder="username">
+                <input type="password" id="passLog-input" placeholder="password">
+                <br><br><br>
+                <button type="submit" id="logIn-input">Log in</button>
+            </form>
+        </div>
 
     <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
@@ -68,8 +151,9 @@
             <button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button>
             <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button> -->
 
-            <ul uk-tab id="crimeTabs">
+            <ul uk-tab id="buttonTabs">
 
+<<<<<<< HEAD
                     <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a>
                     </li>
 
@@ -94,6 +178,24 @@
                         <div class="uk-table uk-table-striped" id="crimeTableItem"></div>
                     </li>
                 </ul>
+=======
+                <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police
+                            Shootings</button></a></li>
+                <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current
+                            Calls</button></a></li>
+                <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Crime
+                            History
+                        </button></a></li>
+            </ul>
+            <ul uk-tab id="crimeTabs"></ul>
+
+
+
+            <ul class="uk-switcher uk-margin" id="crimeTabTables">
+
+            </ul>
+
+>>>>>>> cbf5b86311afb46be0da874f68a464559073127a
         </div>
 
         <div id="map" class="uk-flex-wrap-stretch"></div>
@@ -129,6 +231,12 @@
 
     <!-- Main JS -->
     <script src="assets/javascript/input.js"></script>
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> cbf5b86311afb46be0da874f68a464559073127a
     <!-- <script src="assets/javascript/gmaps.js"></script> -->
     <script src="../Popo/assets/javascript/maps.js"></script>
     <!-- <script src="prototype.js"></script> -->
