@@ -8,102 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Icon -->
-    <!-- <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png"> -->
+    <link rel="icon" type="image/PNG" href="assets/images/icons8-police-badge-48.png">
 
     <!-- Normalize & Style CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <!-- <link rel="stylesheet" href="prototype.css"> -->
-    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
 </head>
 
 <body>
-    <div id="front">
-        <h1 class="city">CITY OF DALLAS</h1>
-        <div id="butt">
-            <form>
-            <button id="registerbutton">Register</button>
-            <button id="loginbutton">Log In</button>
-            <button id="guessbutton">Guesst</button>
-        </form>
-        </div>
-        <div uk-grid uk-height-match="target: > div > .uk-card">
-            <div>
 
-                <div class="uk-card uk-card-body">
-                    <article class="uk-article">
-                        <h1 class="shoot">Shooting History</h1>
-                        <ul>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-
-                        </ul>
-                    </article>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-body">
-                    <article class="uk-article">
-                        <h1 class="actcalls">Active Calls</h1>
-                        <ul>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-
-                        </ul>
-                    </article>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-body">
-                    <article class="uk-article">
-                        <h1 class="histcall">Crime History</h1>
-                        <ul>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-                            <li>a</li>
-
-                        </ul>
-                    </article>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="uk-card uk-card-body">
-        <form id="formRegister">
-            <input type="text" id="street-input" placeholder="street">
-            <input type="text" id="city-input" placeholder="city">
-            <input type="text" id="state-input" placeholder="state">
-            <input type="text" id="zip-input" placeholder="zip code">
-            <input type="text" id="username-input" placeholder="username">
-            <input type="password" id="password-input" placeholder="password">
-            <input type="password" id="password-input2" placeholder="password again">
-            <input type="email" id="email-input" placeholder="email">
-            <input type="text" id="range-input" placeholder="range">
-            <br><br><br>
-            <button type="submit" id="register-input">Register</button>
-        </form>
-    </div>
-
-    <div class="uk-card uk-card-body">
-            <form id="formLogin">
-                <input type="text" id="userLog-input" placeholder="username">
-                <input type="password" id="passLog-input" placeholder="password">
-                <br><br><br>
-                <button type="submit" id="logIn-input">Log in</button>
-            </form>
-        </div>
 
     <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
@@ -151,33 +68,40 @@
             <button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button>
             <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button> -->
 
-            <ul uk-tab id="buttonTabs">
+            <ul uk-tab id="crimeTabs">
 
-                <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police
-                            Shootings</button></a></li>
-                <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Current
-                            Calls</button></a></li>
-                <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Crime
-                            History
-                        </button></a></li>
-            </ul>
-            <ul uk-tab id="crimeTabs"></ul>
+                    <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a>
+                    </li>
 
+                    <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Active Calls</button></a>
+                    </li>
 
+                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a>
+                    </li>
+                </ul>
+                
+                <ul class="uk-switcher uk-margin" id="crimeTabTables">
+                    <li id="shootingTab">
+                        <div class="uk-table uk-table-striped" id="shootingTableItem">
+                        </div>
+                    </li>
 
-            <ul class="uk-switcher uk-margin" id="crimeTabTables">
+                    <li id="callsTab">
+                        <div class="uk-table uk-table-striped" id="callsTableItem"></div>
+                    </li>
 
-            </ul>
-
+                    <li id="crimeTab">
+                        <div class="uk-table uk-table-striped" id="crimeTableItem"></div>
+                    </li>
+                </ul>
         </div>
 
         <div id="map" class="uk-flex-wrap-stretch"></div>
-        <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
     </div>
 
 
     <!-- Google Maps Script -->
-    <!-- <script>
+    <script>
         var map;
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
@@ -185,7 +109,7 @@
                 zoom: 10
             });
         }
-    </script> -->
+    </script>
 
 
 
@@ -205,15 +129,13 @@
 
     <!-- Main JS -->
     <script src="assets/javascript/input.js"></script>
-
-
-
     <!-- <script src="assets/javascript/gmaps.js"></script> -->
     <script src="../Popo/assets/javascript/maps.js"></script>
     <!-- <script src="prototype.js"></script> -->
-    <!-- 
-   <script src="assets/javascript/app.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
+
+    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
+    <!-- <script src="assets/javascript/app.js"></script> -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
         defer></script> -->
 
 
