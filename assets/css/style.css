@@ -8,6 +8,10 @@
     padding: 25px;
 }
 
+#tableContainer h3 {
+    text-align: center;
+}
+
 #map {
     height: 100vh;
     width: 100%;
@@ -15,17 +19,28 @@
     left: 0;
 }
 
-#shootingButton, #callsButtons, #crimeButton {
-    text-align: center;
+#crimeTabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
-#crimeTab {
+#shootingButton, #callsButton, #crimeButton {
+    width: 300px;
+}
+
+#shootingTab, #callsTab, #crimeTab {
     width: 325px;
     height: 650px;
     overflow: auto;
 }
 
-#tableItem tr {
+
+
+/* #shootingTableItem,  */
+/* #callsTableItem,  */
+#crimeTableItem tr {
     padding: 10px;
     margin: 10px;
 }
