@@ -21,6 +21,74 @@
 
 <body>
 
+<!-- SIGN UP PAGE -->
+
+    <div id="signUpPage">
+        <div id="signUp">
+
+        <div id="registrationForm" class="uk-card uk-card-default uk-card-body uk">
+
+            <ul id="regisList" class="uk-flex-center" uk-tab>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Guest</a></li>
+                </ul>
+                
+                <ul id="regisListItems" class="uk-switcher uk-margin">
+                    <li>
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Username</legend>
+                            <input id="userName-input" class="uk-input" type="text">
+                        </div>
+    
+    
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Password</legend>
+                            <input id="password-input" class="uk-input" type="text">
+                        </div>
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Email</legend>
+                            <input id="email-input" class="uk-input" type="text">
+                        </div>
+    
+    
+                        <div class="uk-margin">
+                            <button id="submitBtn" class="uk-button uk-button-default" value="button"><a href="#">Submit</a></button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Username</legend>
+                            <input id="userName-input" class="uk-input" type="text">
+                        </div>
+        
+        
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Password</legend>
+                            <input id="password-input" class="uk-input" type="text">
+                        </div>
+    
+                        <div class="uk-margin">
+                            <button id="loginBtn" class="uk-button uk-button-default" value="button"><a href="#">Login</a></button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="uk-margin">
+                            <button id="guestBtn" class="uk-button uk-button-default" value="button"><a href="#">Enter</a></button>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!-- MAP PAGE -->
 
     <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
@@ -51,6 +119,10 @@
                     <div class="uk-margin">
                         <legend class="uk-legend">Zipcode</legend>
                         <input id="zipCode-input" class="uk-input" type="number">
+
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Radius</legend>
+                        <input id="zipCode-input" class="uk-input" type="number">
                     </div>
 
                     <div class="uk-margin">
@@ -58,15 +130,16 @@
                     </div>
                 </fieldset>
             </form>
+
+            <div id="goBack">
+                <button id="goBackBtn" class="uk-button uk-button-default" value="button">Go Back</button>
+            </div>
+
         </div>
 
         <div id="tableContainer" class="test1 uk-card uk-card-default">
             <h3 id="inputFormHeading">Crime Report</h3>
             <button class="uk-offcanvas-close" type="button" id="closeButton" uk-close></button>
-
-            <!-- <button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button>
-            <button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button>
-            <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button> -->
 
             <ul uk-tab id="crimeTabs">
 
@@ -129,14 +202,9 @@
 
     <!-- Main JS -->
     <script src="assets/javascript/input.js"></script>
-    <!-- <script src="assets/javascript/gmaps.js"></script> -->
     <script src="assets/javascript/maps.js"></script>
-    <!-- <script src="prototype.js"></script> -->
 
     <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
-    <!-- <script src="assets/javascript/app.js"></script> -->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
-        defer></script> -->
 
 
 </body>

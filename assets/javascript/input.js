@@ -8,6 +8,8 @@
 
 function init() {
     $('#tableContainer').hide();
+    $('#wholeMap').hide();
+    // $('signUpPage').hide();
 }
 
 
@@ -46,7 +48,28 @@ $('#closeButton').on('click', function(e) {
 
 });
 
+$('#loginBtn').on('click', function(e) {
+    e.preventDefault();
+    $('#wholeMap').fadeIn();
+    $('#signUpPage').fadeOut();
+})
 
+$('#guestBtn').on('click', function(e) {
+    e.preventDefault();
+    $('#wholeMap').fadeIn();
+    $('#signUpPage').fadeOut();
+})
+
+$('#goBackBtn').on('click', function(e) {
+    e.preventDefault();
+    $('#signUpPage').fadeIn();
+    $('#wholeMap').fadeOut();
+
+    $('#streetName-input').val("");
+    $('#city-input').val("");
+    $('#state-input').val("");
+    $('#zipCode-input').val("");
+})
 
     // Testing / Debugging
 
