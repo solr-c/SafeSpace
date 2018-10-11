@@ -49,11 +49,11 @@ $('#closeButton').on('click', function(e) {
 
 });
 
-$('#loginBtn').on('click', function(e) {
-    e.preventDefault();
-    $('#wholeMap').fadeIn();
-    $('#signUpPage').fadeOut();
-})
+// $('#loginBtn').on('click', function(e) {
+//     e.preventDefault();
+//     $('#wholeMap').fadeIn();
+//     $('#signUpPage').fadeOut();
+// })
 
 $('#guestBtn').on('click', function(e) {
     e.preventDefault();

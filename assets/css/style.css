@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
 * {
     margin: 0;
     padding: 0;
@@ -49,6 +52,9 @@
 
 #tableContainer h3 {
     text-align: center;
+    font-family: 'Raleway', sans-serif;
+    /* color: #12073B; */
+   /* font-size: 37px; */
 }
 
 #map {

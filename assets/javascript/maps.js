@@ -7,65 +7,68 @@ var config = {
     storageBucket: "",
     messagingSenderId: "322670292591"
 };
-  firebase.initializeApp(config);
-  var database = firebase.database();
+firebase.initializeApp(config);
+var database = firebase.database();
 
 //returns true if user registered, false if not.
-function registerUser(username, password, email) {
+function registerUser(username, password, email, callback) {
+    this.user = username;
+    this.pw = password;
+    this.em = email;
 
     // Make sure this username is not in use.
-    var snapshot = getRecord(username);
-    if (snapshot != null && snapshot.exists()){
-        return false;
-    }
-
-    var userPofile = {
-        username: username,
-        password: password,
-        email: email,
-    };
-    database.ref().push(userPofile);
-
-    return true;
+    database.ref().orderByChild("username").equalTo(username).once("value", function (snapshot) {
+        if (snapshot != null && snapshot.exists()) {
+            callback(false);
+        } else {
+            var userPofile = {
+                username: parent.user,
+                password: parent.pw,
+                email: parent.em
+            };
+            database.ref().push(userPofile);
+            callback(true);
+        }
+    });
 
 }
 
 //return true if logged in, false if not
-function login(username, password) {
-
-    //todo: check that the username is in the database, if not return false, if it is, compare the password and return true or false.
-    this.valid = false;
+var pw;
+function login(username, password, callback) {
+    console.log("function login " + username + "/" + password);
     this.pw = password;
 
-    var snapshot = getRecord(username);
+    if (username.length < 1 || password < 1) {
+        callback(false);
+    } else {
+        database.ref().orderByChild("username").equalTo(username).once("value", function (snapshot) {
+            if (snapshot != null && snapshot.exists()) {
+                console.log("got record");
+                snapshot.forEach(function (data) {
+                    var valid = (snapshot.child(data.key).child("password").val() === parent.pw);
+                    callback(valid);
 
-    if (snapshot.exists()) {
-        snapshot.forEach(function (data) {
-            parent.valid = (snapshot.child(data.key).child("password").val() === parent.pw);
+                    // TODO: add a search to their location
+                });
+            } else { callback(false); }
         });
     }
-
-    return this.valid;
-
 }
 
-// returns the snapshot for the user
-function getRecord(username) {
-    this.snap = null;
-    database.ref().orderByChild("username").equalTo(username).once("value", function (snapshot) {
-        //console.log(JSON.stringify(snapshot.val()));
-        parent.snap = snapshot;
-    });
 
-    return this.snap;
-}
+
 
 //#endregion
 
-//#region getShootingrecords
-var limit = 100;
+//#region getSHootingsRecords
+// ** GLOBALS **
+var limit = 100; // global for the limit on all dallas data searches
 var searchCoords = null; //global for the coordinates of the searched address
 var shootingResponse = null; //this is a global var for shooting response
+var markers = []; // array to hold the map markers.
+var incidentArray = []; // array to hold the incidents that will be displayed
+var searchRange = 15;
 
 
 //function to get records for shooting history with two parameters(lattitude and longtitude)
@@ -105,7 +108,7 @@ function getShootingRecords(srcLat, srcLng) {
         }
 
 
-        if (areCoordsWithinRegion(srcLat, srcLng, coords, 15)) {
+        if (areCoordsWithinRegion(srcLat, srcLng, coords, searchRange)) {
             console.log("found one " + coords.lat + "/" + coords.lng);
             records.push({
                 coords: coords,
@@ -120,11 +123,30 @@ function getShootingRecords(srcLat, srcLng) {
 
 //#endregion
 
+//#region getCurrentCallCount
+function getCurrentCallCount() {
+    currentCalls = null;
+    var queryURL = "https://www.dallasopendata.com/resource/are8-xahz.json?$limit=" + limit + "&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        async: false,
+        success: function (response) {
+            currentCalls = response;
+        }
+    });
+
+    return currentCalls.length;
+}
+//#endregion
+
 //#region active Calls
 var currentCalls = null;
 function getCurrentCalls(srcLat, srcLng) {
     console.log("current lat/long = " + srcLat + "/" + srcLng);
     records = [];
+    currentCalls = null;
     var queryURL = "https://www.dallasopendata.com/resource/are8-xahz.json?$limit=" + limit + "&$$app_token=kDCDojjY922O36hyR8W6vQ2nl";
 
     $.ajax({
@@ -148,7 +170,7 @@ function getCurrentCalls(srcLat, srcLng) {
 
         var coords = getCoordinates(address);
 
-        if (areCoordsWithinRegion(srcLat, srcLng, coords, 15)) {
+        if (areCoordsWithinRegion(srcLat, srcLng, coords, searchRange)) {
             console.log("found one " + coords.lat + "/" + coords.lng);
             records.push({
                 coords: coords,
@@ -166,7 +188,7 @@ var crimeIncident = null;
 function crimeHistory(srcLat, srcLng) {
 
     var history = [];
-    var queryUrl = "https://www.dallasopendata.com/resource/9s22-2qus.json?$limit=4000&$$app_token=kDCDojjY922O36hyR8W6vQ2nl&$order=edate%20DESC";
+    var queryUrl = "https://www.dallasopendata.com/resource/9s22-2qus.json?$limit=" + limit + "&$$app_token=kDCDojjY922O36hyR8W6vQ2nl&$order=edate%20DESC";
 
     $.ajax({
         url: queryUrl,
@@ -188,7 +210,7 @@ function crimeHistory(srcLat, srcLng) {
         if (!crimeIncident[i].geocoded_column) {
             coords =
                 coords = getCoordinates(crimeIncident[i].comphaddress + " Dallas, TX");
-            console.log("found fucking coords! " + coords.lat + "/" + coords.lng);
+            console.log("found coords! " + coords.lat + "/" + coords.lng);
 
         } else {
             coords = {
@@ -198,7 +220,7 @@ function crimeHistory(srcLat, srcLng) {
             console.log("got coords: " + coords.lat + "/" + coords.lng);
         }
 
-        if (areCoordsWithinRegion(srcLat, srcLng, coords, 15)) {
+        if (areCoordsWithinRegion(srcLat, srcLng, coords, searchRange)) {
             history.push({
                 coords: coords,
                 incident: crimeIncident[i]
@@ -213,56 +235,62 @@ function crimeHistory(srcLat, srcLng) {
 
 //#endregion
 
-
 //#region shootingButton
-var shootingArray = null;
+//var shootingArray = null;
 $("#shootingButton").on("click", function (e) {
     e.preventDefault();
-    shootingArray = getShootingRecords(searchCoords.lat, searchCoords.lng);
+    resetState();
+    incidentArray = getShootingRecords(searchCoords.lat, searchCoords.lng);
 
-    centerMap(searchCoords.lat, searchCoords.lng);
-    addLocationMark(searchCoords.lat, searchCoords.lng);
-
-    var container = $("#shootingTableItem");
-    var createP = $("<tr>");
-    createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
-
-    container.append(createP);
+    for (i = 0; i < incidentArray.length; i++) {
 
 
-    var container = $("#shootingTableItem");
-    var createP = $("<tr>");
-    createP.addClass("shooting");
-    createP.html("Shooting: " + street, city, state, zipCode);
-
-    container.append(createP);
-
-
-    for (i = 0; i < recs.length; i++) {
-
-
-        var incidentDateTime = shootingArray[i].incident.date;
-        var incidentSuspect = shootingArray[i].incident.suspect_s;
-        var incidentWeapon = shootingArray[i].incident.suspect_weapon;
-        var suspectCondition = shootingArray[i].incident.suspect_deceased_injured_or_shoot_and_miss;
-        var incidentLocation = shootingArray[i].incident.location;
+        var incidentDateTime = moment(incidentArray[i].incident.date).format("MMMM Do YYYY, h:mm:ss a");
+        var incidentSuspect = incidentArray[i].incident.suspect_s;
+        var incidentWeapon = incidentArray[i].incident.suspect_weapon;
+        var suspectCondition = incidentArray[i].incident.suspect_deceased_injured_or_shoot_and_miss;
+        var incidentLocation = incidentArray[i].incident.location;
 
 
         var container = $("#shootingTableItem");
         var createP = $("<tr>");
-        createP.addClass("address");
+        createP.addClass("shooting");
+        createP.attr("data-id", i);
         container.append(createP);
         createP.html(incidentLocation + "<br />" + incidentDateTime + "<br />" + incidentSuspect + "<br />" + "Suspect: " + suspectCondition + "<br />" + incidentWeapon);
 
         container.append(createP);
 
 
-        addMark(recs[i].coords.lat, recs[i].coords.lng, recs[i].incident.case, html, "assets/images/icons8-shooting-40.png");
+        var newMarker = addMark(incidentArray[i].coords.lat, incidentArray[i].coords.lng, "assets/images/icons8-shooting-40.png", i);
+
+        google.maps.event.addListener(newMarker, "click", function () {
+            var marker = this;
+            $("#shootingTableItem > .shooting").each(function () {
+                //console.log("comparing " + $(this).attr("data-id") + "=" + marker.id)
+                if ($(this).attr("data-id") == marker.id) {
+                    var i = parseInt(marker.id);
+                    var incidentDateTime = moment(incidentArray[i].incident.date).format("MMMM Do YYYY, h:mm:ss a");
+                    var incidentSuspect = incidentArray[i].incident.suspect_s;
+                    var incidentWeapon = incidentArray[i].incident.suspect_weapon;
+                    var suspectCondition = incidentArray[i].incident.suspect_deceased_injured_or_shoot_and_miss;
+                    var incidentLocation = incidentArray[i].incident.location;
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: incidentLocation + "<br />" + incidentDateTime + "<br />" + incidentSuspect + "<br />" + "Suspect: " + suspectCondition + "<br />" + incidentWeapon
+                    });
+
+                    infowindow.open(map, marker);
+
+                }
+            });
+        });
+
+        markers.push(newMarker);
     }
 });
 
-$(document).on("click", ".shooting", shootingClick);
+$(document).on("click", ".shooting", itemClick);
 
 function shootingClick() {
     var item = parseInt($(this).attr("data-id"));
@@ -281,106 +309,140 @@ function shootingClick() {
 
 //#region activeCallsButton
 
-var currentArray = null;
+//var currentArray = null;
 $("#callsButton").on("click", function (e) {
     e.preventDefault();
+    resetState();
 
 
-    currentArray = getCurrentCalls(coords.lat, coords.lng);
+    incidentArray = getCurrentCalls(searchCoords.lat, searchCoords.lng);
 
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    // centerMap(searchCoords.lat, searchCoords.lng);
+    // addLocationMark(searchCoords.lat, searchCoords.lng);
 
-    var container = $("#callsTableItem");
-    var createP = $("<tr>");
-    createP.addClass("calls");
-    createP.html("Current: " + street + " " + city + ", " + state + " " + zipCode);
+    for (i = 0; i < incidentArray.length; i++) {
 
-
-    container.append(createP);
-
-    for (i = 0; i < currentArray.length; i++) {
-
-        var incidentDate = currentArray[i].incident.date_time;
-        var incidentLocation = currentArray[i].incident.block + " " + currentArray[i].incident.location;
-        var incidentNatureCall = currentArray[i].incident.nature_of_call;
+        var incidentDate = moment(incidentArray[i].incident.date_time).format("MMMM Do YYYY, h:mm:ss a");
+        var block = incidentArray[i].incident.block ? incidentArray[i].incident.block + " " : "";
+        var incidentLocation = block + incidentArray[i].incident.location;
+        var incidentNatureCall = incidentArray[i].incident.nature_of_call;
 
 
         var container = $("#callsTableItem");
         var createP = $("<tr>");
         createP.addClass("calls");
+        createP.attr("data-id", i);
         createP.html(incidentLocation + "<br />" + incidentNatureCall + "<br />" + incidentDate);
-
         container.append(createP);
 
+        var newMarker = addMark(incidentArray[i].coords.lat, incidentArray[i].coords.lng, "", i);
 
 
-        addMark(currentArray[i].coords.lat, currentArray[i].coords.lng, "");
+         google.maps.event.addListener(newMarker, "click", function () {
+            var marker = this;
+            $("#callsTableItem > .calls").each(function () {
+                console.log("comparing " + $(this).attr("data-id") + "=" + marker.id)
+                if ($(this).attr("data-id") == marker.id) {
+                    var i = parseInt(marker.id);
+                    var incidentDate = moment(incidentArray[i].incident.date_time).format("MMMM Do YYYY, h:mm:ss a");
+                    var block = incidentArray[i].incident.block ? incidentArray[i].incident.block + " " : "";
+                    var incidentLocation = block + incidentArray[i].incident.location;
+                    var incidentNatureCall = incidentArray[i].incident.nature_of_call;
 
+                    var infowindow = new google.maps.InfoWindow({
+                        content: incidentLocation + "<br />" + incidentNatureCall + "<br />" + incidentDate
+                    });
+                    
+                    infowindow.open(map, marker);
+
+                }
+            });
+         });
+
+        markers.push(newMarker);
     }
 });
-$(document).on("click", ".calls", currentClick);
 
-function currentClick() {
+
+$(document).on("click", ".calls", itemClick);
+
+function itemClick() {
+    console.log(map);
     var item = parseInt($(this).attr("data-id"));
-    var coords = currentArray[item].coords;
+    var coords = incidentArray[item].coords;
 
+    panToAndBounceMarker(markers[item], coords);
+}
 
-    for (i = 0; i < currentArray.length; i++) {
-        addMark(currentArray[i].coords.lat, currentArray[i].coords.lng, "assets/images/icons8-shooting-40.png");
-        centerMap(coords.lat, coords.lng);
-
-    }
+function panToAndBounceMarker(marker, coords) {
+    var latLng = new google.maps.LatLng(coords.lat, coords.lng);
+    map.panTo(latLng);
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function () { marker.setAnimation(null); }, 750 * 3);
 }
 
 //#endregion
 
 //#region crimHistoryButton
-var historyArray = null;
+//var historyArray = null;
 $("#crimeButton").on("click", function (e) {
     e.preventDefault();
-    console.log("crime button");
+    resetState();
 
-    historyArray = crimeHistory(coords.lat, coords.lng);
+    incidentArray = crimeHistory(searchCoords.lat, searchCoords.lng);
 
-    centerMap(coords.lat, coords.lng);
-    addLocationMark(coords.lat, coords.lng);
+    for (i = 0; i < incidentArray.length; i++) {
 
-    var container = $("#crimeTableItem");
-    var createP = $("<tr>");
-    createP.addClass("shooting");
-    createP.html("Shooting: " + street + " " + city + ", " + state + " " + zipCode);
-
-    container.append(createP);
-
-
-    for (i = 0; i < historyArray.length; i++) {
-
-        var crimeAddress = historyArray[i].incident.geocoded_column_address + " " + historyArray[i].incident.geocoded_column_city + " " + historyArray[i].incident.geocoded_column_state + " " + historyArray[i].incident.geocoded_column_zip;
+        var crimeAddress = incidentArray[i].incident.geocoded_column_address + " " + incidentArray[i].incident.geocoded_column_city + " " + incidentArray[i].incident.geocoded_column_state + " " + incidentArray[i].incident.geocoded_column_zip;
 
         var address = crimeAddress;
-        var incidentMo = historyArray[i].incident.mo;
-        var officerName = historyArray[i].incident.ro1name;
-        var crimeCategory = historyArray[i].incident.nibrs_crime_category;
-        var reportDate = historyArray[i].incident.reporteddate;
-
-
+        var incidentMo = incidentArray[i].incident.mo;
+        var officerName = incidentArray[i].incident.ro1name;
+        var crimeCategory = incidentArray[i].incident.nibrs_crime_category;
+        var reportDate = moment(incidentArray[i].incident.reporteddate).format("MMMM Do YYYY, h:mm:ss a");
 
 
         var container = $("#crimeTableItem");
         var createP = $("<tr>");
-        createP.addClass("address");
+        createP.addClass("history");
+        createP.attr("data-id", i);
         createP.html(crimeCategory + "<br />" + address + "<br />" + reportDate + "<br />" + officerName + "<br />" + incidentMo);
 
         container.append(createP);
 
-        addMark(historyArray[i].coords.lat, historyArray[i].coords.lng, getIcon(historyArray[i].incident.nibrs_crime_category));
+        var newMarker = addMark(incidentArray[i].coords.lat, incidentArray[i].coords.lng, getIcon(incidentArray[i].incident.nibrs_crime_category), i);
+
+        google.maps.event.addListener(newMarker, "click", function () {
+            var marker = this;
+            $("#crimeTableItem > .history").each(function () {
+                //console.log("comparing " + $(this).attr("data-id") + "=" + marker.id)
+                if ($(this).attr("data-id") == marker.id) {
+                    var i = parseInt(marker.id);
+                    var crimeAddress = incidentArray[i].incident.geocoded_column_address + " " + incidentArray[i].incident.geocoded_column_city + " " + incidentArray[i].incident.geocoded_column_state + " " + incidentArray[i].incident.geocoded_column_zip;
+
+                    var address = crimeAddress;
+                    var incidentMo = incidentArray[i].incident.mo;
+                    var officerName = incidentArray[i].incident.ro1name;
+                    var crimeCategory = incidentArray[i].incident.nibrs_crime_category;
+                    var reportDate = moment(incidentArray[i].incident.reporteddate).format("MMMM Do YYYY, h:mm:ss a");
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: crimeCategory + "<br />" + address + "<br />" + reportDate + "<br />" + officerName + "<br />" + incidentMo
+                    });
+
+                    infowindow.open(map, marker);
+
+                }
+            });
+        });
+
+        markers.push(newMarker);
 
     }
 });
 
 
-$(document).on("click", ".history", historyClick);
+$(document).on("click", ".history", itemClick);
 
 function historyClick() {
     var item = parseInt($(this).attr("data-id"));
@@ -397,17 +459,55 @@ function historyClick() {
 
 //#endregion
 
-//#region searchFunction
+//#region resetState
+function resetState() {
+    // Clear the map markers
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
 
+    //recenter to the searchCoords if they exist
+    if (searchCoords) {
+        centerMap(searchCoords.lat, searchCoords.lng);
+    }
 
+    //remove all the data
+    $("#callsTableItem").empty();
+    $("#shootingTableItem").empty();
+    $("#crimeTableItem").empty();
+    incidentArray = [];
+}
+
+//#endregion
+
+//#region search
+var searchMarker = null;
 function search(address) {
+    // if there is an existing search marker clear it.
+    if (searchMarker) {
+        searchMarker.setMap(null);
+        searchMarker = null;
+    }
+
+    // clear all the other markers and the data.
+    resetState();
+
+    //find the coordinates.
     searchCoords = getCoordinates(address);
 
-    //TODO: check for coords of 0/0 if so, the address was invalid
-    // ALSO, the can only search Dallas area.
+    var latLng = new google.maps.LatLng(searchCoords.lat, searchCoords.lng);
 
-    centerMap(searchCoords.lat, searchCoords.lng);
-    addLocationMark(searchCoords.lat, searchCoords.lng);
+    //set the search marker so we can clear in when there is a new search.
+    searchMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: 'Search Location',
+        icon: "assets/images/if_user 5_6712.png"
+    });
+
+    // center the map on the search location
+    map.panTo(latLng);
 }
 //#endregion
 
@@ -417,54 +517,80 @@ $("#submitBtn").on("click", function (event) {
 
     var username = $("#regisUserName-input").val().trim();
     var password = $("#regisPass-input").val().trim();
-    // var password2 = $("#password-input2").val().trim();
+    var password2 = $("#regisPass2-input").val().trim();
     var email = $("#regisEmail-input").val().trim();
 
-
-    // if (password !== password2) {
-    //     alert("Passwords don't match");
-    //     return
-    // }
-
-
-    var success = registerUser(username, password, email);
-
-    if (success) {
-
-        $("#wholeMap").show();
-        $("#formRegister").hide();
-    } else {
-        alert("Invalid");
+    if (username.length < 1 || password.length < 1 || password2.length < 1 || email.length < 1) {
+        $("#invalid").show();
+    } else if (password !== password2) {
+        $("#invalid").text("Passwords do not match");
+        $("#regisPass-input").val("");
+        $("#regisPass2-input").val("");
+        $("#invalid").show();
+    } 
+    // else if(isValidEmail(email)) {
+    //     $("#invalid").text("Email address invalid");
+    //     $("#invalid").show();
+    // } 
+    else {
+        registerUser(username, password, email, registrationComplete);
     }
-
-
 });
+
+function isValidEmail(s) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(s);
+}
+
+function registrationComplete(success) {
+    if (success) {
+        $("#wholeMap").show();
+        $("#signUpPage").hide();
+        $("#invalid").hide();
+    } else {
+        $("#invalid").text("User already exists");
+        $("#invalid").show();
+    }
+}
+$("#invalid").hide();
 
 //#endregion
 
 //#region loginButton
-$("#loginbutton").on("click", function (event) {
+$("#loginBtn").on("click", function (event) {
     event.preventDefault();
-    $("#formLogin").show();
-    $("#front").hide();
-});
 
-$("#registerbutton").on("click", function (event) {
-    event.preventDefault();
-    $("#formRegister").show();
-    $("#front").hide();
-});
+    var username = $("#loginUserName-input").val().trim();
+    var password = $("#loginPassword-input").val().trim();
+    console.log("logging in: " + username + "/" + password);
+    login(username, password, loggedIn);
+
+})
+
+function loggedIn(success) {
+    console.log("login: " + success);
+    if (success) {
+
+        $("#wholeMap").show();
+        $("#signUpPage").hide();
+        $("#incorrect").hide();
+        // hide otherdiv
+    } else {
+        $("#incorrect").show();
+    }
+}
+$("#incorrect").hide();
 //#endregion
 
 //#region submitButton
-$("#submitBtn").on("click", function (event) {
+$("#formSubmit").on("click", function (event) {
     event.preventDefault();
     var street = $("#streetName-input").val().trim();
     var city = $("#city-input").val().trim();
     var state = $("#state-input").val().trim();
     var zipCode = $("#zipCode-input").val().trim();
-    console.log("Shooting: " + street, city, state, zipCode);
-    searchCoords = getCoordinates(street + " " + city + ", " + state + " " + zipCode);
+    searchRange = parseInt($("#radius-input").val().trim());
+    console.log(searchRange);
 
     search(street + " " + city + ", " + state + " " + zipCode);
 
@@ -479,25 +605,25 @@ function getCoordinates(address) {
     var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&address=" + address;
     var lat = 0;
     var lng = 0;
-    lastResp = null;
+    this.lastResp = null;
     $.ajax
         ({
             type: "GET",
             url: queryURL,
             async: false,
             success: function (response) {
-                lastResp = response;
+                parent.lastResp = response;
             }
         });
 
     //console.log(JSON.stringify(lastResp));
-    if (lastResp.status == "ZERO_RESULTS") {
+    if (this.lastResp.status == "ZERO_RESULTS") {
         lat = 0;
         lng = 0;
     }
     else {
-        lat = lastResp.results[0].geometry.location.lat;
-        lng = lastResp.results[0].geometry.location.lng;
+        lat = this.lastResp.results[0].geometry.location.lat;
+        lng = this.lastResp.results[0].geometry.location.lng;
     }
 
     return { lat: lat, lng: lng };
@@ -521,28 +647,26 @@ function addLocationMark(lat, lng) {
 //#endregion
 
 //#region addMark
-function addMark(lat, lng, icon) {
-    $(function () {
+function addMark(lat, lng, icon, id) {
+    var latLng = new google.maps.LatLng(lat, lng);
+    //TODO: check for coords of 0/0 if so, the address was invalid
+    // ALSO, the can only search Dallas area.
 
-        $("#map").addMarker({
-            coords: [lat, lng], // GPS coords
-            title: "Search Location ", // Title
-            animation: google.maps.Animation.DROP,
+    var newMarker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        id: id
+    });
 
-        });
-    })
+    return newMarker;
+
 }
 //#endregion
 
 //#region centerMap
 function centerMap(lat, lng) {
-    $(function () {
-        $("#map").googleMap({
-            zoom: 15, // Initial zoom level (optional)
-            coords: [lat, lng], // Map center (optional)
-            type: "ROADMAP" // Map type (optional)
-        });
-    });
+    var latLng = new google.maps.LatLng(lat, lng);
+    map.panTo(latLng);
 }
 //#endregion
 
@@ -596,16 +720,22 @@ function getIcon(crime) {
 
     return img;
 }
+
+
 //#endregion
 
-//#region initMap
-var map;
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 32.7766642, lng: -96.79698789999999 },
-        zoom: 12,
-        mapTypeId: 'terrain'
+// $("#submitBtn").validate({
+//     rules:{
+//         username:{
+//             required: true
+//         },
+//         password: {
+//             required: true
+//         },
+//         email: {
+//             required: true,
+//             email: true
+//         }
+//     }
+// })
 
-    });
-}
-//#endregion
