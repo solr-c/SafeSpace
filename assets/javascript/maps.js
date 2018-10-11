@@ -721,21 +721,4 @@ function getIcon(crime) {
     return img;
 }
 
-
-//#endregion
-
-// $("#submitBtn").validate({
-//     rules:{
-//         username:{
-//             required: true
-//         },
-//         password: {
-//             required: true
-//         },
-//         email: {
-//             required: true,
-//             email: true
-//         }
-//     }
-// })
-
+$("#activeCalls").text(getCurrentCallCount());
