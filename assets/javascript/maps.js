@@ -415,10 +415,10 @@ function search(address) {
 $("#submitBtn").on("click", function (event) {
     event.preventDefault();
 
-    var username = $("#userName-input").val().trim();
-    var password = $("#password-input").val().trim();
+    var username = $("#regisUserName-input").val().trim();
+    var password = $("#regisPass-input").val().trim();
     // var password2 = $("#password-input2").val().trim();
-    var email = $("#email-input").val().trim();
+    var email = $("#regisEmail-input").val().trim();
 
 
     // if (password !== password2) {
