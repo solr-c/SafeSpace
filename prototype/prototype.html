@@ -1,111 +1,238 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
+
+<head>
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SafeSpace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Icon -->
-    <link rel="icon" type="image/PNG" href="assets/images/DPDIcon.png">
+    <link rel="icon" type="image/PNG" href="assets/images/icons8-police-badge-48.png">
 
     <!-- Normalize & Style CSS -->
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" /> -->
-    <link rel="stylesheet" href="prototype.css">
-    
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="prototype.css" />
+    <!-- <link rel="stylesheet" href="prototype.css"> -->
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
 </head>
+
 <body>
 
+    <!-- WELCOME PAGE -->
     
-       <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
+    <div id="welcomePage">
+        <h2 id="welcomeText">Test</h2>
+        <div id="welcomeBox" class="uk-card uk-card-default uk-card-body uk">
+            <div>
+                <p>Welcome to SafeSpace. SafeSpace allows you to explore:
+                        Active police calls in your area of Dallas
+                        Crime history for your area
+                        Police shootings that have occurred in your area
+                        
+                        
+                        This site contains the most up to date Dallas Police activity of any site available. Let's get started now by signing up and logging in!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGN UP PAGE -->
+
+    <div id="signUpPage">
+        <div id="signUp">
+
+        <div id="registrationForm" class="uk-card uk-card-default uk-card-body uk">
+
+            <ul id="regisList" class="uk-flex-center" uk-tab>
+                    <li><a href="#">Register</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Guest</a></li>
+                </ul>
+                
+                <ul id="regisListItems" class="uk-switcher uk-margin">
+                    <li>
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Username</legend>
+                            <input id="regisUserName-input" class="uk-input" type="text">
+                        </div>
+
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Password</legend>
+                            <input id="regisPass-input" class="uk-input" type="password">
+                        </div>
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Email</legend>
+                            <input id="regisEmail-input" class="uk-input" type="text">
+                        </div>
+
+
+                        <div class="uk-margin">
+                            <button id="submitBtn" class="uk-button uk-button-default" value="button"><a href="#">Submit</a></button>
+                        </div>
+                    </li>
+
+                    <li>
+
+                        <div class="uk-margin">
+                            <div class="uk-alert-danger" uk-alert>Incorrect username or password</div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Username</legend>
+                            <input id="loginUserName-input" class="uk-input" type="text">
+                        </div>
+        
+        
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Password</legend>
+                            <input id="loginPassword-input" class="uk-input" type="text">
+                        </div>
+
+                        <div class="uk-margin">
+                            <button id="loginBtn" class="uk-button uk-button-default" value="button"><a href="#">Login</a></button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="uk-margin">
+                            <button id="guestBtn" class="uk-button uk-button-default" value="button"><a href="#">Enter</a></button>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!-- MAP PAGE -->
+
+    <div id="wholeMap" class="uk-flex uk-flex-row-reverse uk-flex-nowrap">
 
         <div id="formContainer" class="test uk-card uk-card-default">
-            <h3 id="inputFormHeading">Input Forms</h3>
-            <form id="formTrain" class="test">
+            <h3 id="inputFormHeading">Search</h3>
+            <form id="formTrain" class="">
                 <fieldset id="formField" class="uk-fieldset ">
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">Street Name</legend>
                         <input id="streetName-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">City</legend>
-                        <input  id="city-input" class="uk-input" type="text">
+                        <input id="city-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">State</legend>
                         <input id="state-input" class="uk-input" type="text">
                     </div>
-                    
-                    
+
+
                     <div class="uk-margin">
                         <legend class="uk-legend">Zipcode</legend>
                         <input id="zipCode-input" class="uk-input" type="number">
+
+                    <div class="uk-margin">
+                        <legend class="uk-legend">Radius</legend>
+                        <input id="zipCode-input" class="uk-input" type="number">
                     </div>
-                    
+
                     <div class="uk-margin">
                         <button id="formSubmit" class="uk-button uk-button-default" value="Submit">Submit</button>
                     </div>
                 </fieldset>
             </form>
+
+            <div id="goBack">
+                <button id="goBackBtn" class="uk-button uk-button-default" value="button">Go Back</button>
+            </div>
+
         </div>
 
         <div id="tableContainer" class="test1 uk-card uk-card-default">
-            <h3 id="inputFormHeading">Input Forms</h3>
+            <h3 id="inputFormHeading">Crime Report</h3>
+            <button class="uk-offcanvas-close" type="button" id="closeButton" uk-close></button>
 
-            <button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button>
-            <button id="callsButton" class="uk-button uk-button-primary" value="button">Current Calls</button>
-            <button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button>
+            <ul uk-tab id="crimeTabs">
+
+                    <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a>
+                    </li>
+
+                    <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Active Calls</button></a>
+                    </li>
+
+                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a>
+                    </li>
+                </ul>
+                
+                <ul class="uk-switcher uk-margin" id="crimeTabTables">
+                    <li id="shootingTab">
+                        <div class="uk-table uk-table-striped" id="shootingTableItem">
+                        </div>
+                    </li>
+
+                    <li id="callsTab">
+                        <div class="uk-table uk-table-striped" id="callsTableItem"></div>
+                    </li>
+
+                    <li id="crimeTab">
+                        <div class="uk-table uk-table-striped" id="crimeTableItem"></div>
+                    </li>
+                </ul>
         </div>
-        
+
         <div id="map" class="uk-flex-wrap-stretch"></div>
-    </div> 
+        <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    </div>
 
 
-    <!-- Google Maps Script -->
-    <script>
+
+<!-- Google Maps Script -->
+<!-- <script>
+    var map;
     function initMap() {
-        var location = {
-            lat: 32.7766642,
-            lng: -96.7969879
-        };
-
-        var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 4, 
-            center: location
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 32.7766642, lng: -96.79698789999999 },
+            zoom: 10
         });
-    };
-    </script>
-    
+    }
+</script>
+-->
+
 
 
     <!-- UIkit JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit-icons.min.js"></script>
-    
+
     <!-- Google Maps API -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ8-DhZBU5vbCOyJfutvIHLOxG0j0qtKA&callback=initMap">
-    </script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap"
+        async defer></script>
 
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
 
     <!-- Main JS -->
-    <script src="assets/javascript/input.js"></script>
-    <!-- <script src="assets/javascript/gmaps.js"></script> -->
-    <!-- <script src="assets/javascript/maps.js"></script> -->
     <script src="prototype.js"></script>
+    <script src="assets/javascript/maps.js"></script>
+
+    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
 
 
 </body>
+
 </html>

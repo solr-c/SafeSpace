@@ -3,9 +3,49 @@
     padding: 0;
 }
 
+/* //////////// */
+/* SIGN UP PAGE */
+/* //////////// */
+
+#signUpPage {
+    min-height: 100vh;
+    background: url(../images/Dallas3.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#signUp {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+#registrationForm {
+    width: 30%;
+    margin: 10% auto;
+}
+
+#regisListItems {
+    text-align: center;
+    /* width: 30%; */
+    margin: auto;
+}
+
+
+/* ///////// */
+/* WHOLE MAP */
+/* ///////// */
+
 #formContainer, #tableContainer {
     width: 25%;
     padding: 25px;
+}
+
+#tableContainer h3 {
+    text-align: center;
 }
 
 #map {
@@ -13,4 +53,39 @@
     width: 100%;
     top: 0;
     left: 0;
+}
+
+#crimeTabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+#shootingButton, #callsButton, #crimeButton {
+    width: 300px;
+}
+
+#shootingTab, #callsTab, #crimeTab {
+    width: 325px;
+    height: 650px;
+    overflow: auto;
+}
+
+
+
+/* #shootingTableItem,  */
+/* #callsTableItem,  */
+#crimeTableItem tr {
+    padding: 10px;
+    margin: 10px;
+}
+
+
+/* ///// */
+/* OTHER */
+/* ///// */
+
+::-webkit-scrollbar { 
+    display: none; 
 }

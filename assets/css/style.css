@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
 * {
     margin: 0;
     padding: 0;
 }
 
-/* //////////// */
-/* SIGN UP PAGE */
-/* //////////// */
+/* ////////////////////// */
+/* SIGN UP & WELCOME PAGE */
+/* ////////////////////// */
 
 #signUpPage {
     min-height: 100vh;
@@ -16,16 +19,17 @@
     background-size: cover;
 }
 
-#signUp {
+#signUp, #welcomePage {
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
 }
 
-#registrationForm {
+#registrationForm, #welcomeBox, #welcomeText {
     width: 30%;
     margin: 10% auto;
+    font-family: 'Raleway', sans-serif;
 }
 
 #regisListItems {
@@ -34,6 +38,9 @@
     margin: auto;
 }
 
+#welcomeBtn {
+    margin: auto;
+}
 
 /* ///////// */
 /* WHOLE MAP */
@@ -44,11 +51,11 @@
     padding: 25px;
 }
 
-#tableContainer h3 {
+#formContainer, #tableContainer h3 {
     text-align: center;
-   font-family: 'Abril Fatface', cursive;
-   color: #12073B;
-   font-size: 37px;
+    font-family: 'Raleway', sans-serif;
+    /* color: #12073B; */
+   /* font-size: 37px; */
 }
 
 #map {
