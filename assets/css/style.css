@@ -26,9 +26,10 @@
     align-items: center;
 }
 
-#registrationForm, #welcomeBox {
+#registrationForm, #welcomeBox, #welcomeText {
     width: 30%;
     margin: 10% auto;
+    font-family: 'Raleway', sans-serif;
 }
 
 #regisListItems {
@@ -50,7 +51,7 @@
     padding: 25px;
 }
 
-#tableContainer h3 {
+#formContainer, #tableContainer h3 {
     text-align: center;
     font-family: 'Raleway', sans-serif;
     /* color: #12073B; */
