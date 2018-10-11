@@ -46,6 +46,9 @@
 
 #tableContainer h3 {
     text-align: center;
+   font-family: 'Abril Fatface', cursive;
+   color: #12073B;
+   font-size: 37px;
 }
 
 #map {

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SafeSpace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
     <!-- Icon -->
     <link rel="icon" type="image/PNG" href="assets/images/icons8-police-badge-48.png">
@@ -17,25 +18,38 @@
 
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/css/uikit.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 </head>
 
 <body>
 
-<!-- SIGN UP PAGE -->
+    <!-- SIGN UP PAGE -->
 
     <div id="signUpPage">
+
         <div id="signUp">
 
-        <div id="registrationForm" class="uk-card uk-card-default uk-card-body uk">
+            <div id="registrationForm" class="uk-card uk-card-default uk-card-body uk">
 
-            <ul id="regisList" class="uk-flex-center" uk-tab>
-                    <li><a href="#">Register</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Guest</a></li>
+                <ul id="regisList" class="uk-flex-center" uk-tab>
+                    <li>
+                        <a href="#">Register</a>
+                    </li>
+                    <li>
+                        <a href="#">Login</a>
+                    </li>
+                    <li>
+                        <a href="#">Guest</a>
+                    </li>
                 </ul>
-                
+
                 <ul id="regisListItems" class="uk-switcher uk-margin">
                     <li>
+
+                        <div class="uk-margin">
+                            <div id="invalid" class="uk-alert-danger">Please fill out the form completely</div>
+
+                        </div>
                         <div class="uk-margin">
                             <legend class="uk-legend">Username</legend>
                             <input id="userName-input" class="uk-input" type="text">
@@ -47,43 +61,68 @@
                             <input id="password-input" class="uk-input" type="password">
                         </div>
 
+
+                        <div class="uk-margin">
+                            <legend class="uk-legend">Password Again</legend>
+                            <input id="regisPass2-input" class="uk-input" type="password">
+                        </div>
+
                         <div class="uk-margin">
                             <legend class="uk-legend">Email</legend>
+<<<<<<< Updated upstream
                             <input id="email-input" class="uk-input" type="text">
+=======
+                            <input id="regisEmail-input" class="uk-input" type="email" required>
+>>>>>>> Stashed changes
                         </div>
     
     
                         <div class="uk-margin">
-                            <button id="submitBtn" class="uk-button uk-button-default" value="button"><a href="#">Submit</a></button>
+                            <button id="submitBtn" class="uk-button uk-button-default" value="button">
+                                <a href="#">Submit</a>
+                            </button>
                         </div>
                     </li>
 
                     <li>
+                        <div class="uk-margin">
+                            <div id="incorrect" class="uk-alert-danger">Incorrect Username or Password</div>
+                        
+                        </div>
+
                         <div class="uk-margin">
                             <legend class="uk-legend">Username</legend>
                             <input id="userName-input" class="uk-input" type="text">
                         </div>
-        
-        
+
+
                         <div class="uk-margin">
                             <legend class="uk-legend">Password</legend>
+<<<<<<< Updated upstream
                             <input id="password-input" class="uk-input" type="text">
+=======
+                            <input id="loginPassword-input" class="uk-input" type="password">
+>>>>>>> Stashed changes
                         </div>
     
                         <div class="uk-margin">
-                            <button id="loginBtn" class="uk-button uk-button-default" value="button"><a href="#">Login</a></button>
+                            <button id="loginBtn" class="uk-button uk-button-default" value="button">
+                                <a href="#">Login</a>
+                            </button>
                         </div>
                     </li>
 
                     <li>
                         <div class="uk-margin">
-                            <button id="guestBtn" class="uk-button uk-button-default" value="button"><a href="#">Enter</a></button>
+                            <button id="guestBtn" class="uk-button uk-button-default" value="button">
+                                <a href="#">Enter</a>
+                            </button>
                         </div>
                     </li>
                 </ul>
 
             </div>
-            
+
         </div>
     </div>
 
@@ -120,14 +159,24 @@
                         <legend class="uk-legend">Zipcode</legend>
                         <input id="zipCode-input" class="uk-input" type="number">
 
-                    <div class="uk-margin">
-                        <legend class="uk-legend">Radius</legend>
-                        <input id="zipCode-input" class="uk-input" type="number">
-                    </div>
+                        <div class="uk-margin">
+                            <!-- <legend class="uk-legend">Radius</legend>
+                            <input id="radius-input" class="uk-input" type="number"> -->
+                            <legend class="uk-legend">Radius</legend>
+                            <select id="radius-input">
+                                <option value="5">5 miles</option>
+                                <option value="10">10 miles</option>
+                                <option value="15" selected>15 miles</option>
+                                <option value="20">20 miles</option>
+                                <option value="1000">All</option>
 
-                    <div class="uk-margin">
-                        <button id="formSubmit" class="uk-button uk-button-default" value="Submit">Submit</button>
-                    </div>
+                            </select>
+
+                        </div>
+
+                        <div class="uk-margin">
+                            <button id="formSubmit" class="uk-button uk-button-default" value="Submit">Submit</button>
+                        </div>
                 </fieldset>
             </form>
 
@@ -135,24 +184,33 @@
                 <button id="goBackBtn" class="uk-button uk-button-default" value="button">Go Back</button>
             </div>
 
-        </div>
+            </div>
 
-        <div id="tableContainer" class="test1 uk-card uk-card-default">
-            <h3 id="inputFormHeading">Crime Report</h3>
-            <button class="uk-offcanvas-close" type="button" id="closeButton" uk-close></button>
+            <div id="tableContainer" class="test1 uk-card uk-card-default">
+                <h3 id="inputFormHeading">Crime Report</h3>
+                <button class="uk-offcanvas-close" type="button" id="closeButton" uk-close></button>
 
-            <ul uk-tab id="crimeTabs">
+                <ul uk-tab id="crimeTabs">
 
-                    <li><a href="#"><button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button></a>
+                    <li>
+                        <a href="#">
+                            <button id="shootingButton" class="uk-button uk-button-primary" value="button">Police Shootings</button>
+                        </a>
                     </li>
 
-                    <li><a href="#"><button id="callsButton" class="uk-button uk-button-primary" value="button">Active Calls</button></a>
+                    <li>
+                        <a href="#">
+                            <button id="callsButton" class="uk-button uk-button-primary" value="button">Active Calls</button>
+                        </a>
                     </li>
 
-                    <li><a href="#"><button id="crimeButton" class="uk-button uk-button-primary" value="button">Current Crime</button></a>
+                    <li>
+                        <a href="#">
+                            <button id="crimeButton" class="uk-button uk-button-primary" value="button">Crime History</button>
+                        </a>
                     </li>
                 </ul>
-                
+
                 <ul class="uk-switcher uk-margin" id="crimeTabTables">
                     <li id="shootingTab">
                         <div class="uk-table uk-table-striped" id="shootingTableItem">
@@ -167,13 +225,15 @@
                         <div class="uk-table uk-table-striped" id="crimeTableItem"></div>
                     </li>
                 </ul>
+            </div>
+
+            <div id="map" class="uk-flex-wrap-stretch"></div>
+            <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
         </div>
 
-        <div id="map" class="uk-flex-wrap-stretch"></div>
-        <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
-    </div>
 
 
+<<<<<<< Updated upstream
     <!-- Google Maps Script -->
     <!-- <script>
         var map;
@@ -185,27 +245,41 @@
         }
     </script>
  -->
+=======
+        <!-- Google Maps Script -->
+        <script>
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 32.7766642, lng: -96.79698789999999 },
+                    zoom: 12,
+                    mapTypeId: 'terrain'
+                });
+            }
+        </script>
 
 
-    <!-- UIkit JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit-icons.min.js"></script>
-
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap"
-        async defer></script>
+>>>>>>> Stashed changes
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
+        <!-- UIkit JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.17/js/uikit-icons.min.js"></script>
 
-    <!-- Main JS -->
-    <script src="assets/javascript/input.js"></script>
-    <script src="assets/javascript/maps.js"></script>
+        <!-- Google Maps API -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlLaXHzolEt6dE-_eZi6llI_m5uRKQu-c&callback=initMap" async
+            defer></script>
 
-    <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
+
+        <!-- Main JS -->
+        <script src="assets/javascript/input.js"></script>
+        <script src="assets/javascript/maps.js"></script>
+
+        <script type="text/javascript" src="assets/javascript/jquery.googlemap.js"></script>
 
 
 </body>
