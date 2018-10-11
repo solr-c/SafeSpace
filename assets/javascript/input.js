@@ -9,7 +9,8 @@
 function init() {
     $('#tableContainer').hide();
     $('#wholeMap').hide();
-    // $('signUpPage').hide();
+    $('#signUp').hide();
+    // $('#welcomePage').hide();
 }
 
 
@@ -70,6 +71,15 @@ $('#goBackBtn').on('click', function(e) {
     $('#state-input').val("");
     $('#zipCode-input').val("");
 })
+
+$('#welcomeBtn').on('click', function() {
+    $('#welcomePage').fadeOut(1000);
+
+    delayTest3 = setTimeout(function() {
+        $('#signUp').fadeIn(1000);
+    }, 1000);
+
+});
 
     // Testing / Debugging
 

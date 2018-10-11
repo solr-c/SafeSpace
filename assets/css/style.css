@@ -3,9 +3,9 @@
     padding: 0;
 }
 
-/* //////////// */
-/* SIGN UP PAGE */
-/* //////////// */
+/* ////////////////////// */
+/* SIGN UP & WELCOME PAGE */
+/* ////////////////////// */
 
 #signUpPage {
     min-height: 100vh;
@@ -16,14 +16,14 @@
     background-size: cover;
 }
 
-#signUp {
+#signUp, #welcomePage {
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
 }
 
-#registrationForm {
+#registrationForm, #welcomeBox {
     width: 30%;
     margin: 10% auto;
 }
@@ -34,6 +34,9 @@
     margin: auto;
 }
 
+#welcomeBtn {
+    margin: auto;
+}
 
 /* ///////// */
 /* WHOLE MAP */
