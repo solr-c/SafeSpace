@@ -514,18 +514,11 @@ function search(address) {
 //#region registerForm
 $("#submitBtn").on("click", function (event) {
     event.preventDefault();
-<<<<<<< Updated upstream
 
-    var username = $("#userName-input").val().trim();
-    var password = $("#password-input").val().trim();
-    // var password2 = $("#password-input2").val().trim();
-    var email = $("#email-input").val().trim();
-=======
     var username = $("#regisUserName-input").val().trim();
     var password = $("#regisPass-input").val().trim();
     var password2 = $("#regisPass2-input").val().trim();
     var email = $("#regisEmail-input").val().trim();
->>>>>>> Stashed changes
 
     if (username.length < 1 || password.length < 1 || password2.length < 1 || email.length < 1) {
         $("#invalid").show();
@@ -542,7 +535,6 @@ $("#submitBtn").on("click", function (event) {
     else {
         registerUser(username, password, email, registrationComplete);
     }
-
 });
 
 function isValidEmail(s) {
