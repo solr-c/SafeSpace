@@ -12,8 +12,14 @@ This site contains the most up to date Dallas Police activity of any site availa
 #### Check it out [here](https://sapulsic.github.io/SafeSpace/).
 
 ![screenshot](assets/images/SafeSpace1.png)
+
+
 ![screenshot](assets/images/SafeSpace4.png)
+
+
 ![screenshot](assets/images/SafeSpace2.png)
+
+
 ![screenshot](assets/images/Safespace3.png)
 
 
